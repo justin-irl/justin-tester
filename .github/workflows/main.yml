@@ -1,0 +1,36 @@
+name: Create OnCall Report
+on:
+  schedule:
+    # should run on mondays at 8am utc
+    - cron: '45 18 * * *'
+
+jobs:
+  create_issue:
+    name: Create OnCall Report
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Get current date
+        id: date
+        run: echo "::set-output name-=date::$(date + '%Y-%m-%d')"
+      - name: Create OnCall Report
+        uses: imjohnbo/issue-bot@v3.0
+        with:
+          labels: "Oncall Report"
+          title: "[OnCall Report] ${{steps.date.outputs.date}}"
+          body: |
+            ## Monday (PRIMARY, SECONDARY)
+
+            ## Tuesday (PRIMARY, SECONDARY)
+
+            ## Wednesday (PRIMARY, SECONDARY)
+
+            ## Thursday (PRIMARY, SECONDARY)
+
+            ## Friday (PRIMARY, SECONDARY)
+          pinned: false
+          # will close previous issue with matching tags
+          close-previous: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
