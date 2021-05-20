@@ -2,7 +2,7 @@ name: Create OnCall Report
 on:
   schedule:
     # should run on mondays at 8am utc
-    - cron: '7 19 * * *'
+    - cron: '0 20 * * *'
 
 jobs:
   create_issue:
@@ -11,11 +11,16 @@ jobs:
     permissions:
       issues: write
     steps:
+    
+      - name: Get current date
+        id: date
+        run: echo "::set-output name-=date::$(date + '%Y-%m-%d')"
+    
       - name: Create OnCall Report
         uses: imjohnbo/issue-bot@v3.0
         with:
           labels: "Oncall Report"
-          title: "[OnCall Report] "
+          title: "[OnCall Report] Week starting: ${{steps.date.outputs.date}}"
           body: |
             ## Monday (PRIMARY, SECONDARY)
 
