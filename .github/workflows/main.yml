@@ -2,7 +2,7 @@ name: Create OnCall Report
 on:
   schedule:
     # should run on mondays at 8am utc
-    - cron: '45 18 * * *'
+    - cron: '0 19 * * *'
 
 jobs:
   create_issue:
