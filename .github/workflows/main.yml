@@ -2,7 +2,7 @@ name: Create OnCall Report
 on:
   schedule:
     # should run on mondays at 8am utc
-    - cron: '10 21 * * *'
+    - cron: '15,21,27,33 * * * *'
 
 jobs:
   create_issue:
@@ -26,7 +26,7 @@ jobs:
             ## Thursday (PRIMARY, SECONDARY)
 
             ## Friday (PRIMARY, SECONDARY)
-          pinned: false
+          pinned: true
           # will close previous issue with matching tags
           close-previous: true
         env:
