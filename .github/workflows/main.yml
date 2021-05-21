@@ -2,21 +2,24 @@ name: Create OnCall Report
 on:
   schedule:
     # should run on mondays at 8am utc
-    - cron: '55,0 * * * *'
+    - cron: '7,13,19 * * * *'
 
 jobs:
   create_issue:
-    name: Create OnCall Report
+    name: CreateOnCallReport
     runs-on: ubuntu-latest
     permissions:
       issues: write
     steps:
       - name: Create OnCall Report
-        uses: imjohnbo/issue-bot@v3.0
+        uses: imjohnbo/issue-bot@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          labels: "Oncall Report"
-          title: "[OnCall Report]"
-          body: |
+          assignees: ""
+          labels: "Oncall-Report, actions"
+          title: "[OnCall Report] START_DATE - END_DATE, MONTH, YEAR"
+          body: |-
             ## Monday (PRIMARY, SECONDARY)
 
             ## Tuesday (PRIMARY, SECONDARY)
@@ -26,8 +29,9 @@ jobs:
             ## Thursday (PRIMARY, SECONDARY)
 
             ## Friday (PRIMARY, SECONDARY)
-          pinned: true
-          # will close previous issue with matching tags
+          # will close previous issue with matching tags and changed the pinned report
           close-previous: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          pinned: true
+          # adds to https://github.com/Shopify/Team-Dev-Success/projects/3 in the oncall column
+          project: 3
+          column: Oncall Reports
