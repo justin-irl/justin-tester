@@ -33,5 +33,5 @@ jobs:
           close-previous: true
           pinned: true
           # adds to https://github.com/Shopify/Team-Dev-Success/projects/3 in the oncall column
-          project: 3
+          project: 1
           column: Oncall Reports
